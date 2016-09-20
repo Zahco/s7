@@ -1,0 +1,31 @@
+HTTP/1.1 200 OK
+Date: Thu, 15 Sep 2016 11:16:29 GMT
+Server: Apache/2.4.18 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 390
+Content-Type: text/plain;charset=UTF-8
+
+Un echo du serveur
+
+Par GET, j'ai reçu :
+--------------------
+nom :  a
+prenom :  b
+
+Par POST, j'ai reçu : 
+---------------------
+nom :  a
+prenom :  b
+
+
+
+Dans l'en-tête, j'ai reçu : 
+---------------------------
+Host :  localhost
+Content-Type :  application/x-www-form-urlencoded
+Content-Length :  14
+
+
+Le corps de la requête contenait :
+----------------------------------
+nom=a&prenom=b

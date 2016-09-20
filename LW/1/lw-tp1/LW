@@ -1,0 +1,6 @@
+POST /~spaurgeo/s7/reqs/echo.php?nom=a&prenom=b HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 14
+
+nom=a&prenom=b

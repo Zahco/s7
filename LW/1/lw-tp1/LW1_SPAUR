@@ -1,0 +1,105 @@
+1.1
+80
+
+1.2
+echo -en "GET /edt/m1gil.html HTTP/1.0\r\n" | netcat dpt-info-sciences.univ-rouen.fr 80
+
+1.3
+cat LW | netcat -q -1 dpt-info-scienc-rouen.fr 80 > rep
+200
+header HTTP
+GET / HTTP/1.0
+
+1.4
+cat LW | netcat -q -1 dpt-info-scienc-rouen.fr 80 > rep
+LW:
+GET / HTTP/1.1
+Host: univ-rouen.fr
+
+1.5
+X-Frame-Options: SAMEORIGIN
+
+5731
+<!DOCTYPE 
+
+1.6
+taille du fichier 5731 -> 22321
+
+1.7
+22393
+
+--------------------------
+
+2.2
+nslookup heberville.univ-rouen.fr
+Non-authoritative answer:
+Name:	heberville.univ-rouen.fr
+Address: 10.0.128.53
+
+nslookup mastergeii.formations.univ-rouen.fr
+Non-authoritative answer:
+mastergeii.formations.univ-rouen.fr	canonical name = heberville.univ-rouen.fr.
+Name:	heberville.univ-rouen.fr
+Address: 10.0.128.53
+
+2.3
+netcat -q -1 mastergeii.formations.univ-rouen.fr 80
+Location: http://mastergeii.formations.univ-rouen.fr/MGeii.php
+seul le l'attribut host à une importance.
+
+--------------------------
+
+3.1
+http://localhost/~spaurgeo/s7/reqs/tux.png
+affichage de l'image.
+
+3.2
+HEAD /~spaurgeo/s7/reqs/tux.png HTTP/1.1
+Host: localhost
+cat LW | netcat -q -1 localhost 80
+
+3.3
+GET /~spaurgeo/s7/reqs/long.html HTTP/1.1
+Accept-Encoding: gzip
+Host: localhost
+
+3.4
+HEAD /~spaurgeo/s7/reqs/tux.png HTTP/1.1
+If-modified-since: Sat, 13 Sep 2016 10:59:46 GMT
+Host: localhost
+
+HTTP/1.1 304 Not Modified
+Date: Tue, 13 Sep 2016 13:29:08 GMT
+Server: Apache/2.4.18 (Ubuntu)
+ETag: "21d1-53c5ddcb49300"
+
+3.5
+HEAD /~spaurgeo/s7/reqs/tux.png HTTP/1.1
+If-modified-since: Sat, 13 Sep 2016 10:59:46 GMT
+Host: localhost
+
+GET /~spaurgeo/s7/reqs/long.html HTTP/1.1
+Host: localhost
+Connection: close
+
+3.6
+GET /~spaurgeo/s7/reqs/echo.php?nom=a&prenom=b HTTP/1.1
+Host: localhost
+
+3.7
+POST /~spaurgeo/s7/reqs/echo.php HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 14
+
+nom=a&prenom=b
+
+
+3.8
+oui
+POST /~spaurgeo/s7/reqs/echo.php?nom=a&prenom=b HTTP/1.1
+Host: localhost
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 14
+
+nom=a&prenom=b
