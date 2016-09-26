@@ -1,0 +1,15 @@
+//declaration
+  %{
+    //decaration c
+  %}
+  
+  // declaration pour exp rationnelle
+
+%%
+//exp rationnelles
+exp1  code1
+expn  coden
+
+
+%%
+//code c
