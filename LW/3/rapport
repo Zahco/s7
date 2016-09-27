@@ -1,0 +1,25 @@
+1.2
+attribut text-align: center justify left right
+
+1.3
+balise:
+SCRIPT|STYLE|META|LINK|OBJECT
+TITLE & BASE?
+
+attribut:
+lang, dir
+
+2.1
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<META http-equiv="content-type" content="text/html; charset=utf-8" >
+2.2
+
+2.3
+non p contient un type block.
+
+2.6
+pas de texte dans body ni div
+title obligatoire dans head 
+pas de ul autorisé dans p
+
+
