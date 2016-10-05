@@ -5,11 +5,12 @@ executable = main
 
 all: $(executable)
 
-main: main.o matrice_transition.o
-main.o: main.c matrice_transition.h
+main: main.o listes_adjacence.o
+main.o: main.c listes_adjacence.h
 
 
 matrice_transition.o: matrice_transition.c matrice_transition.h
+listes_adjacence.o: listes_adjacence.c listes_adjacence.h
 
 clean:
 	$(RM) $(executable) *.o
