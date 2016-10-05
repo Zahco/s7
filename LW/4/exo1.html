@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Exercice 1</title>
+  </head>
+  <body>
+    <form method="GET" action="#">
+      <p>Nom:<input type="text" name="nom" required></p>
+      <p>Email:<input type="email" name="email" required></p>
+      <details open>
+        <summary>Compléments</summary>
+        <p>Date de naissance:<input type="date" name="naissance"></p>
+        <p>Couleur:<input type="color" name="couleur"></p>
+        <p>Animal:<input list="animal" type="text" name="animal">
+          <datalist id="animal">
+            <option value="Chien">
+            <option value="Chat">
+            <option value="Lézard">
+            <option value="Mr Spock">
+          </datalist>
+        </p>
+      </details>
+      <p><input type="submit" value="Envoyer"></p>
+    </form>
+  </body>
+</html>
