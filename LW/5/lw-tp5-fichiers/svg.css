@@ -1,0 +1,36 @@
+.feet, .beak {
+  fill: yellow;
+}
+
+.belly {
+  fill: white;
+}
+
+.arms {
+  fill: #2b2b31;
+}
+
+.body, .head {
+  fill: #3f4753;
+}
+
+.feet {
+  stroke: black;
+}
+
+.beak:hover {
+  fill: red;
+}
+svg {
+position: absolute;
+}
+svg g g path.belly:hover {
+  filter: url(svg.html#BlurFilter);
+  
+}
+body {
+  margin-top: 15%;
+  text-align: center;
+  overflow: hidden;
+  background-color: rgb(202, 220, 255);
+}

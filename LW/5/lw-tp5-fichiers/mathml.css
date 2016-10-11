@@ -1,0 +1,13 @@
+math:hover * {
+  color: red;
+}
+
+mo.opSum {
+  color: green;
+}
+msqrt.opRoot {
+  color: blue;
+}
+.opRoot > * {
+  color: initial;
+}
