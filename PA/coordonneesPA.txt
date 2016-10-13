@@ -1,0 +1,30 @@
+Pierre: 
+0685355773
+dechampspierre@hotmail.fr
+symfony
+
+Ilyass:
+0659348587
+ilyass.frasal5@gmail.com
+cloudera, hadoop, symfony
+
+Yassine:
+0783817524
+yassine.mouttalib1@etu.univ-rouen.fr
+php, java
+
+Geoffrey:
+0659021407
+geoffrey.spaur@gmail.com
+php, jquery, c#
+
+Corentin:
+0606465734
+corentin.leguen.pro@gmail.com
+symfony, java, bootstrap
+
+Nicolas:
+0650421527
+nico.pittion@gmail.com
+c#, javascript, php, bootstrap
+
