@@ -45,6 +45,16 @@ CREATE TABLE gconsultation(
        constraint pk_consultation primary key(n_med, n_malade, date_consult)
 );	
 
+CREATE TABLE gconsultation_archive(
+       n_med integer constraint fk_consul_archive_medecin references gmedecin(n_med),
+       n_malade integer constraint fk_consul_archive_malade references gmalade(n_malade),
+       date_consult date,
+       h_consult integer not null,
+       prescription varchar2(128),
+       examen varchar2(128),
+       constraint pk_consultation_archive primary key(n_med, n_malade, date_consult)
+);	
+
 -- remplissage médecin
 INSERT INTO  gmedecin VALUES (104,'Jean MOREL','0149282592','jean.morel@free.fr','Florence ROUSSEAU','PATTASS');
 INSERT INTO  gmedecin VALUES (123,'Alexandre BERNARD','0149282594','alex.bernard@yahoo.fr','Florence ROUSSEAU','PATT');
