@@ -1,0 +1,82 @@
+@font-face {
+  font-family: "Lobster";
+  src: url("Lobster 1.3.otf");
+}
+
+body {
+  width: 800px;
+  margin: auto;
+}
+h1, h2, .sommaire > p {
+  font-family: Lobster;
+  border-bottom: solid #DDDDDD 3px;
+  padding-left: 10px;
+}
+.sommaire > p {
+  text-align: right;
+}
+h1 {
+  text-align: center;
+}
+h2 + p::first-letter {
+  font-size: 4em;
+  color: blue;
+  font-family: Lobster;
+  float: left;
+  margin: 5px;
+}
+.head > p {
+  font-family: "Courier New", Times, serif;
+  border: solid black 1px;
+  padding: 5px;
+  background-color: #DDDDDD;
+}
+
+.encartD, .encartG {
+  padding: 7px;
+  width: 40%;
+  background-image: url('degrade.jpg');
+  background-repeat: no-repeat;
+}
+
+.encartD {
+  border:solid gray; 
+  border-width: 0px 0px 3px 3px;
+  float: right;
+}
+.encartD img, .encartG img {
+  width: 100%;
+}
+.encartD p, .encartG p {
+  font-size: 0.7em;
+}
+
+.encartG {
+  border: solid black; 
+  border-width: 0px 1px 1px 0px;
+  float: left;
+  clear: inline-end;
+}
+
+#honors h2 {
+  clear: left;
+}
+
+.sommaire {
+  float: right;
+  border: 2px solid black;
+  text-decoration: none;
+  color: black;
+  background-color: #88FFFF;
+  z-index: 2;
+  margin: 10px;
+}
+.sommaire > p {
+  border-bottom: 2px solid #AAA;
+  margin: 5px;
+  margin-top: 30px;
+}
+.sommaire a {
+  color: black;
+  text-decoration: none;
+}
