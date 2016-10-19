@@ -1,0 +1,46 @@
+.menu {
+  float: left;
+  margin-right: 20px;
+}
+.menu li {
+  list-style-type: none;
+  background-color: #aaaa65;
+  cursor: pointer;
+  width: 200px;
+  height: 1.25em;
+  border: solid 1px #777732;
+  position: relative;
+}
+.menu .more::after {
+  content: url('right.png');
+  position: absolute;
+  right: 5px;
+  top: 2px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.menu li:hover {
+  background-color: #777732;
+  color: white;
+}
+.menu ul:hover {
+  color: black;
+}
+
+.menu ul {
+  display: none;
+  padding: 0px;
+}
+.menu > ul {
+  display: block;
+}
+
+.menu li:hover > ul {
+  display: block;
+  margin-left: 200px;
+  margin-top: -1.25em; 
+}
