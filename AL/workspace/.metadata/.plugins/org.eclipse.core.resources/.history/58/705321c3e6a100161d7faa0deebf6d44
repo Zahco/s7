@@ -1,8 +1,0 @@
-package Composite;
-
-public enum Style {
-	BOLD, ITALIC, UNDERLINE, NONE;
-	public String wrap(String str) {
-		return str;
-	}
-}

@@ -1,5 +1,0 @@
-package Composite;
-
-public enum Style {
-	BOLD, ITALIC, UNDERLINE, NONE
-}

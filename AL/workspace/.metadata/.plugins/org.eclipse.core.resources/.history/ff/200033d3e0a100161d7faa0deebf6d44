@@ -1,7 +1,0 @@
-package Composite;
-
-public interface IComponent {
-	public String toString();
-	public String toStringHTML();
-	public void setStyle(Style s);
-}
