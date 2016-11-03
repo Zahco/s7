@@ -1,0 +1,22 @@
+package Composite;
+
+public class Figure implements IComponent {
+
+	private String imgurl;
+
+	public Figure(String imgurl) {
+		this.imgurl = imgurl;
+	}
+
+	public String toString() {
+		return imgurl;
+	}
+
+	public String toStringHTML() {
+		return "<img src='" + imgurl + "'>";
+	}
+	
+	public void setStyle() {
+		return;
+	}
+}

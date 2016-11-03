@@ -1,0 +1,27 @@
+package Composite;
+
+import java.util.List;
+
+public class Section implements IComponent {
+
+	private String title;
+	private List<IComponent> elements;
+	
+	public Section(String title) {
+		this.title = title;
+		elements = new ArrayList<IComponent>();
+	}
+	
+	@Override
+	public String toStringHTML() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStyle(Style s) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

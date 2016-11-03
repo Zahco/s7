@@ -1,0 +1,18 @@
+package Composite;
+
+public class Figure extends StyleComponent {
+
+	private String imgurl;
+
+	public Figure(String imgurl) {
+		this.imgurl = imgurl;
+	}
+
+	public String toString() {
+		return imgurl;
+	}
+
+	public String toStringHTML() {
+		return "<img src='" + imgurl + "'>";
+	}
+}

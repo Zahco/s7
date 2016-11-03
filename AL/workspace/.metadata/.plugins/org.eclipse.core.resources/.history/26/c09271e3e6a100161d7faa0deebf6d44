@@ -1,0 +1,7 @@
+package Composite;
+
+public enum Style {
+	BOLD, ITALIC, UNDERLINE, NONE;
+	
+	public abstract String wrap(String str);
+}

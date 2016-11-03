@@ -1,0 +1,8 @@
+package Composite;
+
+public abstract class StyleComponent implements IComponent {
+	
+	public void setStyle(Style s) {
+		
+	}
+}
