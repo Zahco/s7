@@ -57,22 +57,22 @@ int naif_ir(const char *x, size_t xlen, const char *y, size_t ylen) {
 
 int naif_irs(const char *x, size_t xlen, const char *y, size_t ylen) {
   int nbocc = 0;
-  char *ys = malloc(xlen + ylen);
+  char *ys = malloc(xlen + ylen - 1);
   strcpy(ys, y);
-  strcpy(ys + ylen, x);
+  strcpy(ys + ylen - 1, x);
   char c = x[0];
   size_t i = 0;
   while (1) {
-    if (c == y[i]) {
+    if (c == ys[i]) {
       size_t j = 1;
-      while (j < xlen && x[j] == y[i + j]) {
+      while (j < xlen && x[j] == ys[i + j]) {
         ++j;
       }
       if (j == xlen) {
         ++nbocc;
         printf("Occ : %zu\n", i);
-        if (i + j >= xlen + ylen) {
-          return 0;
+        if (i + j >= xlen + ylen - 1) {
+          return nbocc;
         }
       }
     }
@@ -165,6 +165,41 @@ int moris_pratt(const char *x, size_t xlen, const char *y, size_t ylen) {
   return nbocc;
 }
 
+//KNUTH-MORIS-PRATT
+int *meil_pref(const char *x, size_t xlen) {
+  int *bp = bon_pref(x, xlen);
+  int *mp = malloc(sizeof(*mp) * xlen + 1);
+  mp[0] = -1;
+  for (size_t i = 1; i < xlen + 1; ++i) {
+    if (x[i] == x[bp[i]]) {
+      mp[i] = mp[bp[i]];
+    } else {
+      mp[i] = bp[i];
+    }
+  }
+  free(bp);
+  return mp;
+}
+
+int knuth_moris_pratt(const char *x, size_t xlen, const char *y, size_t ylen) {
+  int *mp = meil_pref(x, xlen);
+  int i = 0;
+  int nbocc = 0;
+  for (size_t j = 0; j < ylen; ++j) {
+    while (i >= 0 && x[i] != y[j]) {
+      i = mp[i];
+    }
+    ++i;
+    if (i == (int)xlen) {
+      printf("Occ : %zu\n", j);
+      ++nbocc;
+      i = mp[i];
+    }
+  }
+  free(mp);
+  return nbocc;
+}
+
 //BOYER-MOORE
 
 int *suffixe(const char *x, size_t xlen) {
@@ -178,7 +213,7 @@ int *suffixe(const char *x, size_t xlen) {
     } else {
       g = min(i, g);
       f = i;
-      while (g >= 0 && x[g] != x[g + xlen - 1 - f]) {
+      while (g >= 0 && x[g] == x[g + xlen + 1 - f]) {
         --g;
       }
       suff[i] = f - g;
@@ -188,30 +223,34 @@ int *suffixe(const char *x, size_t xlen) {
 }
 
 int *bon_suffixe(const char *x, size_t xlen) {
-  int *bs = malloc(sizeof(*bs) * xlen);
+  int *bs = malloc(xlen);
   int *suff = suffixe(x, xlen);
-  size_t i = 0;
-  for (int j = xlen - 2; j >= -1; --j) {
-    if (j == -1 || suff[j] == j + 1) {
-      while (i < xlen - 1 - j) {
-        bs[i] = xlen - 1 - j;
-        ++i;
+ 
+  for (size_t i = 0; i < xlen; ++i){
+    bs[i] = xlen;
+  }
+  for (int i = xlen - 1; i >= 0; --i) {
+    if (suff[i] == i + 1) {
+     for (size_t j = 0; j < xlen - 1 - i; ++j) {
+        if (bs[j] == (int)xlen) {
+          bs[j] = xlen - 1 - i;
+        }
       }
     }
   }
-  for (size_t j = 0; j < xlen - 1; ++j) {
-    bs[xlen - 1 - suff[j]] = xlen - 1 - j;
+  for (size_t i = 0; i <= xlen - 2; ++i) {
+    bs[xlen - 1 - suff[i]] = xlen - 1 - i;
   }
   free(suff);
   return bs;
 }
 
 int *dernocc(const char *x, size_t xlen) {
-  int *docc = malloc(CHAR_MAX);
+  int *docc = malloc(CHAR_MAX * sizeof(int));
   for (size_t i = 0; i < CHAR_MAX; ++i) {
     docc[i] = xlen;
   }
-  for (size_t i = 0; i < xlen; ++i) {
+  for (size_t i = 0; i < xlen - 1; ++i) {
     docc[(size_t)x[i]] = xlen - 1 - i;
   }
   return docc;
@@ -221,10 +260,10 @@ int boyer_moore(const char *x, size_t xlen, const char *y, size_t ylen) {
   int *bs = bon_suffixe(x, xlen);
   int *docc = dernocc(x, xlen);
   int nbocc = 0;
-  size_t j = xlen - 1;
+  size_t j = 0;
   while (j < ylen) {
     int i = xlen - 1;
-    while (i >= 0 && x[i] == y[j - xlen + 1 + i]) {
+    while (i >= 0 && x[i] == y[j + i]) {
       --i;
     }
     if (i < 0) {
@@ -232,11 +271,66 @@ int boyer_moore(const char *x, size_t xlen, const char *y, size_t ylen) {
       ++nbocc;
       j += bs[0];
     } else {
-      j = max(bs[i], docc[y[j - xlen + 1 + i] - xlen + 1 + i]);
+      j += max(bs[i], docc[y[j + i] - xlen + 1 + i]);
     }
   }
   free(docc);
   free(bs);
   return nbocc;
 }
+
+//HORSPOOL
+
+int horspool(const char *x, size_t xlen, const char *y, size_t ylen) {
+  int *occ = malloc(CHAR_MAX * sizeof(int));
+  for (size_t i = 0; i < CHAR_MAX; ++i) {
+    occ[i] = xlen;
+  }
+  for (size_t i = 0; i < xlen - 1; ++i) {
+    occ[(size_t)x[i]] = xlen - 1 - i;
+  }
+  int nbocc = 0;
+  for (const char *q = y; q < y + ylen - xlen + 1; q += occ[(size_t)q[xlen - 1]]) {
+    if (memcmp(x, q, xlen) == 0) {
+      printf("Occ : %zu\n", q - y);
+      ++nbocc;
+    }
+  }
+  free(occ);
+  return nbocc;
+}
+
+
+//QUICK SEARCH
+
+int quick_search(const char *x, size_t xlen, const char *y, size_t ylen) {
+  int *occ = malloc(CHAR_MAX * sizeof(int));
+  for (size_t i = 0; i < CHAR_MAX; ++i) {
+    occ[i] = xlen + 1;
+  }
+  for (size_t i = 0; i < xlen; ++i) {
+    occ[(size_t)x[i]] = xlen - i;
+  }
+  int nbocc = 0;
+  for (const char *q = y; q < y + ylen - xlen; q += occ[(size_t)q[xlen]]) {
+    if (memcmp(x, q, xlen) == 0) {
+      printf("Occ : %zu\n", q - y);
+      ++nbocc;
+    }
+  }
+  free(occ);
+  return nbocc;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

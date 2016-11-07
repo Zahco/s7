@@ -10,7 +10,11 @@ extern int naif_sr(const char *x, size_t xlen, const char *y, size_t ylen);
 extern int naif_srs(const char *x, size_t xlen, const char *y, size_t ylen);
 
 extern int moris_pratt(const char *x, size_t xlen, const char *y, size_t ylen);
+extern int knuth_moris_pratt(const char *x, size_t xlen, const char *y, size_t ylen);
 
 extern int boyer_moore(const char *x, size_t xlen, const char *y, size_t ylen);
+
+extern int horspool(const char *x, size_t xlen, const char *y, size_t ylen);
+extern int quick_search(const char *x, size_t xlen, const char *y, size_t ylen);
 
 #endif // SEARCH_H
