@@ -20,8 +20,4 @@ public class TokenLibAdaptater<E> implements Iterator<E> {
 	public E next() {
 		return enumE.nextElement();
 	}
-
-	@Override
-	public void remove() {
-	}
 }
