@@ -1,43 +1,43 @@
 %{
-  int nb_string = 0;
-  int length_string = 0;
-  int length_com = 0;
   int i = 1;
-  int _argc;
+  int _argc = 0;
   char **_argv;
+  int nbchar = 0;
+  int nbword = 0;
+  int nbline = 0;
+  int _nbchar = 0;
+  int _nbword = 0;
+  int _nbline = 0;
+  #define yyterminate()  printf("%d\t%d\t%d\t[Total]\n", nbchar, nbword, nbline);\
+                          return 0;
 %}
-
-%x STR
-%x INLINECOM
-%x BLOCKCOM
-
-CARAC .|\n
 
 %%
 
-\"                BEGIN STR; printf("%s", yytext);
-<STR>\\\"         length_string += yyleng; printf("%s", yytext);
-<STR>\"           ++nb_string; BEGIN INITIAL; printf("%s", yytext);
-<STR>{CARAC}      ++length_string; printf("%s", yytext);
-
-\/\/              BEGIN INLINECOM;
-<INLINECOM>\n     BEGIN INITIAL;
-<INLINECOM>.      ++length_com;
-
-\/\*              BEGIN BLOCKCOM;
-<BLOCKCOM>{CARAC} ++length_com;
-<BLOCKCOM>\*\/    BEGIN INITIAL;
+[\t ]*[^\t\n ]+    ++nbword; nbchar += strlen(yytext);
+\n                 ++nbline; ++nbchar;
+.                  ++nbchar;
 
 %%
 
 int yywrap() {
   fclose(yyin);
-  if (i < _argc) {
-    yyin = fopen(_argv[i], "r");
+  printf("%d\t%d\t%d\t%s\n", nbchar - _nbchar,
+    nbword - _nbword,
+    nbline - _nbline,
+    _argv[i]);
+  _nbchar = nbchar;
+  _nbword = nbword;
+  _nbline = nbline;
+  ++i;
+  while (i < _argc && (yyin = fopen(_argv[i], "r")) == NULL) {
+    fprintf(stderr, "fopen: Unknown file \"%s\"\n", _argv[i]);
     ++i;
-    return 0;
   }
-  return 1;
+  if (i == _argc) {
+    return 1;
+  }
+  return 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -47,11 +47,9 @@ int main(int argc, char *argv[]) {
   _argc = argc;
   _argv = argv;
   yyin = fopen(argv[i], "r");
-  ++i;
+  if (yyin == NULL) {
+    return EXIT_FAILURE;
+  }
   yylex();
-  
-  printf("\n\n\nnb_string:     %d\n", nb_string);
-  printf("length_string: %d\n", length_string);
-  printf("length_com:    %d\n", length_com);
   return EXIT_SUCCESS;
 }
