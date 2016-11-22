@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+	<title>Exercice 1</title>
+  <script src="lw-tp9-fichiers/ajax.js"></script>
+</head>
+
+
+
+<body>
+
+<form action="#" method="GET">
+  <div>
+    <p>
+      <select name="commune" id="scommune">
+        <option value="GQ">Le Grand-Quevilly</option>
+        <option value="PQ">Le Petit-Quevilly</option>
+        <option value="RO">Rouen</option>
+        <option value="SE">Saint-Étienne-du-Rouvray</option>
+        <option value="SO">Sotteville-lès-Rouen</option>
+      </select>
+      <select name="station"></select>    
+    </p>
+		<p><input type="button" value="Go!"></p>
+	</div>
+</form>
+
+
+<script>
+  var ajax = createXhrObject();
+  var select = document.getElementById("scommune");
+  select.onchange = function() {
+    ajax.open("get", )
+  }
+</script>
+
+</body>
+
+</html>
