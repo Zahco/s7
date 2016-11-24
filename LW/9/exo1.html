@@ -4,6 +4,17 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" >
 	<title>Exercice 1</title>
   <script src="lw-tp9-fichiers/ajax.js"></script>
+  <style>
+    img.hide {
+      display: none;
+    }
+    img.show {
+      display: inline;
+    }
+    img {
+      width: 60px;
+    }
+  </style>
 </head>
 
 
@@ -20,18 +31,45 @@
         <option value="SE">Saint-Étienne-du-Rouvray</option>
         <option value="SO">Sotteville-lès-Rouen</option>
       </select>
-      <select name="station"></select>    
+      <select name="station" id="sstation"></select> <img src="ananas.gif" id="ajax-load" class="hide">  
     </p>
 		<p><input type="button" value="Go!"></p>
+    
 	</div>
 </form>
 
+<span contentEditable>
+	Sélectionnez n'importe quoi sur cette ligne, puis cliquez
+</span>
+<input type="button" value="G"       onclick="document.execCommand('bold')"
+	style="font-weight:bold"/>
+<input type="button" value="I"       onclick="document.execCommand('italic')"
+	style="font-style:italic"/>
+<input type="button" value="S"       onclick="document.execCommand('underline')"
+	style="text-decoration:underline"/>
+<input type="button" value="Effacer" onclick="document.execCommand('delete')"/>
 
 <script>
   var ajax = createXhrObject();
   var select = document.getElementById("scommune");
-  select.onchange = function() {
-    ajax.open("get", )
+  var aload = document.getElementById("ajax-load");
+  select.onchange = function () {
+    ajax.open("get", "lw-tp9-fichiers/Communes/ajax_xml.php?commune=" + select.value);
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4 && ajax.status == 200) {
+        document.getElementById("sstation").innerHTML = "";
+        var options = ajax.responseXML.getElementsByTagName("station");
+        for (var i = 0; i < options.length; ++i) {
+          var opt = document.createElement("option");
+          opt.value = options[i].getElementsByTagName("code")[0].textContent;
+          opt.appendChild(document.createTextNode(options[i].getElementsByTagName("nom")[0].textContent));
+          document.getElementById("sstation").appendChild(opt);
+          aload.className = "hide";
+        }
+      }
+    }
+    ajax.send(null);
+    aload.className = "show";
   }
 </script>
 
