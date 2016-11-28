@@ -1,30 +1,39 @@
 
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "lex.yy.h"
-#include "yystype.h"
-void yyerror(const char *s);
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <math.h>
+  #include "lex.yy.h"
+  #include "yystype.h"
+  void yyerror(const char *s);
 %}
+
 %token NOMBRE
+%token COS
+%token SIN
+%token TAN
+
+%left '-' '+'
+%left '*' '/'
+%right MOINSU
+
 %%
-ligne   : ligne expr '\n' {printf("resultat : %f \n",$2);}
-        | ligne '\n'
-        |
-        ;
-expr    : expr '+' terme {$$=$1+$3;}
-        | expr '-' terme {$$=$1-$3;}
-        | terme
-        ;
-terme   : terme '*' facteur {$$=$1*$3;}
-        | terme '/' facteur {$$=$1/$3;}
-        | facteur
-        ;
-facteur : '-' facteur {$$=-1*$2;}
-        | '(' expr ')' {$$ = $2;}
-        | NOMBRE {$$ = $1;}
-        ;
+ligne : ligne exp '\n' {printf("resultat : %f \n",$2);}
+      | ligne '\n'
+      |
+      ;
+exp   : exp '+' exp {$$ = $1 + $3;}
+      | exp '-' exp {$$ = $1 - $3;}
+      | exp '*' exp {$$ = $1 * $3;}
+      | exp '/' exp {$$ = $1 / $3;}
+      | SIN '(' exp ')' {$$ = sin($3);}
+      | COS '(' exp ')' {$$ = cos($3);}
+      | TAN '(' exp ')' {$$ = tan($3);}
+      | '(' exp ')' {$$ = $2;}
+      | '-' exp %prec MOINSU
+      | NOMBRE      {$$ = $1;}
+      ;
 %%
 void yyerror(const char *s) {
  fprintf(stderr,"%s\n", s);

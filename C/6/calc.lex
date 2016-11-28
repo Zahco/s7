@@ -1,12 +1,14 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include "yystype.h"
-#include "calc.tab.h"
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <math.h>
+//  #include "yystype.h"
+  #include "calc.tab.h"
 %}
+
 NOMBRE (([[:digit:]]+(\.[0-9]+)?)|(\.[0-9]+))([eE][+-]?[0-9]+)?
+VARIABLE [a-zA-Z]+[a-zA-Z0-9]*
 %%
 {NOMBRE} {
   double l;
@@ -24,9 +26,10 @@ NOMBRE (([[:digit:]]+(\.[0-9]+)?)|(\.[0-9]+))([eE][+-]?[0-9]+)?
     exit(EXIT_FAILURE);
   }
   printf("%f\n", l);
-  yylval = l;
+  yylval.val = l;
   return NOMBRE;
 }
+{VARIABLE} yylval.sptr = yytext; return VARIABLE;
 sin return SIN;
 cos return COS;
 tan return TAN;
@@ -37,6 +40,7 @@ tan return TAN;
 \( return '(';
 \) return ')';
 \n return '\n';
+=  return '=';
 . {}
 %%
 

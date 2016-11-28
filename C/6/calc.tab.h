@@ -46,16 +46,28 @@ extern int yydebug;
   enum yytokentype
   {
     NOMBRE = 258,
-    COS = 259,
-    SIN = 260,
-    TAN = 261,
-    MOINSU = 262
+    VARIABLE = 259,
+    COS = 260,
+    SIN = 261,
+    TAN = 262,
+    MOINSU = 263
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 57 "calc.y" /* yacc.c:1909  */
+
+  double val;
+  char *sptr;
+
+#line 68 "calc.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
