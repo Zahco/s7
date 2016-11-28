@@ -15,7 +15,6 @@ struct trie {
   list **transition;
   char *finite;
   
-  size_t curNode;
   size_t *suppleance;
 };
 
@@ -24,13 +23,12 @@ typedef struct trie trie;
 
 extern trie *create_trie(int maxNode);
 extern int insert_in_trie(trie *t, char *w);
+extern int set_suppleance(trie *t);
 extern int is_in_trie(trie *t, char *w);
 extern void print_trie(trie *t);
 extern void dispose_trie(trie **t);
 
-extern void insert_prefixe(trie *t, char *w);
-extern void insert_suffixe(trie *t, char *w);
-extern void insert_facteur(trie *t, char *w);
+extern int search(trie *t, char *text, size_t textlen);
 
 
-#endif // _MATRICE_TRANSITION_H
+#endif // _LISTES_ADJACENCE_H
