@@ -54,5 +54,6 @@
         $res = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>".
                 "<stations>".$res."</stations>";
         header("Content-Type: text/xml; charset=utf-8");
+        sleep(2);
         echo $res;
     }
