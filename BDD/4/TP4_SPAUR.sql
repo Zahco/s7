@@ -1,4 +1,4 @@
-2.1.a
+--2.1.a
 create or replace trigger triggerMajId
 before insert on gmalade
 for each row
@@ -13,7 +13,7 @@ begin
   where n_malade = :new.n_malade;
 end;
 /
-  Trigger created.
+--Trigger created.
   
 2.1.b
 create or replace trigger triggerLowercase

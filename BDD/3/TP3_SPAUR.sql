@@ -1,8 +1,8 @@
-2.1
+--2.1
 ALTER TABLE gmedecin ADD salaire integer default 2000 not null;
-  Table altered.
+--Table altered.
 
-2.2
+--2.2
 set serveroutput on;
 
 create or replace procedure tp3_2_2 is
@@ -18,9 +18,9 @@ begin
   end if;
 end;
 /
-  Procedure created.
+--Procedure created.
 
-2.3
+--2.3
 
 create or replace function tp3_2_3 (id_medic integer, mon integer, yea integer)
 return real is ret real;
@@ -33,19 +33,19 @@ begin
   return ret;
 end;
 /
-  Procedure created.
+--Procedure created.
 
 create or replace procedure print_tp3_2_3 is
 begin
   DBMS_OUTPUT.PUT_LINE(tp3_2_3(131,10,2011) || ' consultations');
 end;
 /
-  Procedure created.
+--Procedure created.
 
-execute print_tp3_2_3;
-  5 consultations
+--execute print_tp3_2_3;
+--5 consultations
 
-  PL/SQL procedure successfully completed.
+--PL/SQL procedure successfully completed.
 
 2.4
 
@@ -56,4 +56,4 @@ begin
   update gmedecin set salaire = salaire + salaire * 0.02 where statut != 'PUPH' and statut != 'PATT';
 end;
 /
-  Procedure created.
+--Procedure created.

@@ -17,7 +17,6 @@ create type mission_type as object(
 /
 
 -- 2.1.2
-create table mission of mission_type;
 create table intervenant of intervenant_type;
 
 -- 2.1.3
