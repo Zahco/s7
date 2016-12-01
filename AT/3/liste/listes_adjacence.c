@@ -15,7 +15,6 @@ trie *create_trie(int maxNode) {
   }
   t->maxNode = maxNode;
   t->nextNode = 0;
-  t->curNode = 0;
   
   t->transition = malloc(sizeof(list *) * maxNode);
   if (t->transition == NULL) {
@@ -76,7 +75,7 @@ int insert_in_trie(trie *t, char *w) {
   int curNode = 0;
   int nextNode;
   size_t i = 0;
-  while (i < strlen(w) 
+  while (i < strlen(w)
     && (nextNode = get_transition(t->transition[curNode], w[i])) != -1) {
     curNode = nextNode;
     ++i;
@@ -92,28 +91,37 @@ int insert_in_trie(trie *t, char *w) {
   return curNode;
 }
 
-int set_suppleance(trie *t, size_t prevNode, char c, size_t curNode) {
+int aux_set_suppleance(trie *t, size_t prevNode, char c, size_t curNode) {
   if (t == NULL) {
     return -1;
   }
   if (curNode == 0 || prevNode == 0) {
     t->suppleance[curNode] = 0;
   }
-  size_t tmpNode = -1;
+  int tmpNode = -1;
   while (prevNode != 0 && tmpNode == -1) {
-    size_t tmpNode = get_transition(t->set_suppleance[prevNode], c);
+    tmpNode = get_transition(t->transition[t->suppleance[prevNode]], c);
     if (tmpNode == -1) {
-      prevNode = t->set_suppleance[prevNode];
+      prevNode = t->suppleance[prevNode];
     } else {
       t->suppleance[curNode] = tmpNode;
+      if (t->finite[tmpNode]) {
+        t->finite[curNode] = 1;
+      }
     }
   }
   list *l = t->transition[curNode];
   while (l != NULL) {
-    set_suppleance(t, curNode, l->letter, l->targetNode);
+    aux_set_suppleance(t, curNode, l->letter, l->targetNode);
+    l = l->next;
   }
+  return 1;
 }
-/*
+
+int set_suppleance(trie *t) {
+  return aux_set_suppleance(t, 0, 0, 0);
+}
+
 int is_in_trie(trie *t, char *w) {
   if (t == NULL || w == NULL) {
     return -1;
@@ -135,7 +143,7 @@ void print_transition(list *l) {
   printf(" [%zu, %c]", l->targetNode, l->letter);
   print_transition(l->next);
 }
-*/
+
 void print_trie(trie *t) {
   if (t == NULL) {
     return;
@@ -145,6 +153,11 @@ void print_trie(trie *t) {
     print_transition(t->transition[i]);
     printf(" } - %d\n", (int) t->finite[i]);
   }
+  printf("\n[ ");
+  for (size_t i = 0; i < t->maxNode; ++i) {
+    printf("%zu ", t->suppleance[i]);
+  }
+  printf("]\n");
 }
 
 void dispose_transition(list *l) {
@@ -165,55 +178,29 @@ void dispose_trie(trie **t) {
   free(*t);
   *t = NULL;
 }
-/*
-void insert_prefixe(trie *t, char *w) {
-  int l = strlen(w);
-  char mot[l];
-  strcpy(mot, w);
-  for (int i = l; i > 0; --i) {
-    mot[i] = '\0';
-    insert_in_trie(t, mot);
+
+
+
+//faire avancer l'automate
+size_t get_next_node(trie *t, size_t curNode, char c) {
+  if (t == NULL) {
+    return -1;
   }
+  int node = 0;
+  while ((node = get_transition(t->transition[curNode], c)) == -1 && curNode != 0) {
+    curNode = t->suppleance[curNode];
+  }
+
+  return node == -1 ? curNode : (size_t)node;
 }
 
-void insert_suffixe(trie *t, char *w) {
-  int l = strlen(w);
-  for (int i = 0; i < l; ++i) {
-    printf("insert: %s\n", w + i);
-    insert_in_trie(t, w + i);
+int search(trie *t, char *text, size_t textlen) {
+  size_t curNode = 0;
+  for (size_t i = 0; i < textlen; ++i) {
+    curNode = get_next_node(t, curNode, text[i]);
+    if (t->finite[curNode]) {
+      printf("occ: %zu\n", i);
+    }
   }
+  return 0;
 }
-
-void insert_facteur(trie *t, char *w) {
-  int l = strlen(w);
-  for (int i = 0; i < l; ++i) {
-    insert_suffixe(t, w + i);
-  }
-}
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

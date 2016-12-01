@@ -1,6 +1,8 @@
 #ifndef _MIXTE_H
 #define _MIXTE_H
 
+#include <limits.h>
+
 struct list {
   size_t targetNode;
   char letter;
@@ -14,6 +16,9 @@ struct trie {
   size_t nextNode;
   list **transition;
   char *finite;
+  int firstNode[CHAR_MAX];
+
+  size_t *suppleance;
 };
 
 typedef struct trie trie;
@@ -21,13 +26,12 @@ typedef struct trie trie;
 
 extern trie *create_trie(int maxNode);
 extern int insert_in_trie(trie *t, char *w);
-extern int is_in_trie(trie *t, char *w);
+//extern int is_in_trie(trie *t, char *w);
 extern void print_trie(trie *t);
 extern void dispose_trie(trie **t);
 
-extern void insert_prefixe(trie *t, char *w);
-extern void insert_suffixe(trie *t, char *w);
-extern void insert_facteur(trie *t, char *w);
+extern int set_suppleance(trie *t);
+extern int search(trie *t, char *text, size_t textlen);
 
 
 #endif // _MIXTE_H
