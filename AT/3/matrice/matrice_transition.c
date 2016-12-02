@@ -77,7 +77,7 @@ int set_suppleance(trie *t) {
           } else {
             t->suppleance[nextNode] = tmpNode;
             if (t->finite[tmpNode]) {
-              t->finite[nextNode] = 1;
+              ++t->finite[nextNode];
             }
           }
         }
@@ -179,12 +179,13 @@ size_t get_next_node(trie *t, size_t curNode, char c) {
 }
 
 int search(trie *t, char *text, size_t textlen) {
+  int count = 0;
   size_t curNode = 0;
   for (size_t i = 0; i < textlen; ++i) {
     curNode = get_next_node(t, curNode, text[i]);
     if (t->finite[curNode]) {
-      printf("occ: %zu\n", i);
+      count += t->finite[curNode];
     }
   }
-  return 0;
+  return count;
 }
