@@ -10,7 +10,7 @@ char random_carac(size_t min, size_t max) {
 
 int text_generator(FILE *file, size_t textlen, size_t alphalen) {
   for (size_t i = 0; i < textlen; ++i) {
-    char c = random_carac(MIN_CARAC, alphalen);
+    char c = random_carac(MIN_CARAC, MIN_CARAC + alphalen - 1);
     fputc(c, file);
   }
   return 0;

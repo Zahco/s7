@@ -4,12 +4,18 @@
 
 #include "text_generator.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
+  if (argc != 5) {
+    return EXIT_FAILURE;
+  }
   time_t t;
   srand((unsigned) time(&t));
-  size_t ylen = 3000;
-  char *filename = "test_mots_generator";
-  
-  ftext_generator(filename, ylen, 'Z');
+  char *output = argv[1];
+  size_t wordlen = atoi(argv[3]);
+  size_t nbword = atoi(argv[2]);
+  size_t alphalen = atoi(argv[4]);
+
+
+  fwords_generator(output, wordlen, nbword, alphalen);
   return EXIT_SUCCESS;
 }
