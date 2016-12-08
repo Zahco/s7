@@ -4,12 +4,16 @@
 
 #include "text_generator.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
+  if (argc != 4) {
+    return EXIT_FAILURE;
+  }
   time_t t;
   srand((unsigned) time(&t));
-  size_t ylen = 3000;
-  char *filename = "test_text_generator";
-  
-  ftext_generator(filename, ylen, 'Z');
+  char *output = argv[1];
+  size_t textlen = atoi(argv[2]);
+  size_t alphalen = atoi(argv[3]);
+
+  ftext_generator(output, textlen, alphalen);
   return EXIT_SUCCESS;
 }
